@@ -3,7 +3,6 @@ import packageJson from '../../package.json';
 
 @Route.Route({
   routeBase: '',
-  disable: true,
 })
 class RouteIndex extends Route {
   constructor(params) {

@@ -36,6 +36,21 @@
   },
   {
     "type": "get",
+    "url": "/",
+    "title": "",
+    "group": "Index",
+    "permission": [
+      {
+        "name": "public"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "/home/babouliin/tek5/js-project/back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/Index.js",
+    "groupTitle": "Index",
+    "name": "Get"
+  },
+  {
+    "type": "get",
     "url": "/user/:email",
     "title": "",
     "group": "User",
