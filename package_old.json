@@ -1,0 +1,33 @@
+{
+  "name": "back-modulejs",
+  "version": "0.0.1",
+  "description": "Node.js API with Koa-Smart, Sequelize & Postgresql",
+  "author": "epitech",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^3.3.0",
+    "config": "^3.3.6",
+    "dotenv": "^10.0.0",
+    "koa-smart": "^3.1.0"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon --exec babel-node src/index.js",
+    "start": "node src/index.js",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "babel-node": "^0.0.1-security",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "nodemon": "^2.0.14",
+    "prisma": "^3.3.0",
+    "ts-node": "^10.4.0"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "apidoc"
+    ]
+  }
+}
