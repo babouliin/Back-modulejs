@@ -2,7 +2,8 @@ import { Types } from 'koa-smart';
 import bcrypt from 'bcrypt';
 import Route from './Route';
 import prisma from '../config/prisma.config';
-import validJWTNeeded from '../middlewares/jwt.middleware';
+import accesses from '../middlewares/accesses';
+import crypto from '../utils';
 
 class RouteUser extends Route {
   constructor(params) {
@@ -10,54 +11,50 @@ class RouteUser extends Route {
   }
 
   @Route.Get({
-    path: '/:email',
-    queryType: Types.object().keys({
-      email: Types.string().required(),
-    }),
-    middlewares: [
-      async (ctx, next) => {
-        await validJWTNeeded(ctx, next);
-      },
-    ],
+    path: '',
+    accesses: [accesses.isConnected],
   })
-  async getByEmail(ctx) {
-    const { email } = ctx.params;
-    const user = await prisma.user.findUnique({
+  async getUser(ctx) {
+    const { user } = ctx.state;
+    const userInDB = await prisma.user.findUnique({
+      where: {
+        email: user.email,
+      },
+      select: {
+        id: true,
+        email: true,
+        pseudo: true,
+      },
+    });
+    if (userInDB === null) {
+      return this.throwNotFound(ctx.i18n.__('user not found'));
+    }
+    return this.sendOk(ctx, userInDB);
+  }
+
+  @Route.Post({
+    path: '/login',
+    bodyType: Types.object().keys({
+      email: Types.string().required(),
+      password: Types.string().required(),
+    }),
+  })
+  async loginUser(ctx) {
+    const { email, password } = this.body(ctx);
+    const userInDB = await prisma.user.findUnique({
       where: {
         email,
       },
-      select: {
-        email: true,
-        pseudo: true,
-      },
     });
-    if (user === null) {
-      return this.throwBadRequest('User doesn\'t exist', true);
+    if (userInDB === null) {
+      return this.throwNotFound(ctx.i18n.__('user not found'));
     }
-    return this.sendOk(ctx, user);
-  }
-
-  @Route.Get({
-    path: '/:pseudo',
-    queryType: Types.object().keys({
-      pseudo: Types.string().required(),
-    }),
-  })
-  async getByPseudo(ctx) {
-    const { pseudo } = ctx.params;
-    const user = await prisma.user.findUnique({
-      where: {
-        pseudo,
-      },
-      select: {
-        email: true,
-        pseudo: true,
-      },
-    });
-    if (user === null) {
-      return this.send(ctx, Route.StatusCode.badRequest, { error: `User with pseduo ${pseudo} doesn't exist.` });
+    const resCompare = await bcrypt.compare(password, userInDB.password);
+    if (resCompare === true) {
+      await ctx.loginUser({ email: userInDB.email });
+      return this.sendOk(ctx);
     }
-    return this.sendOk(ctx, user);
+    return this.throwNotFound(ctx.i18n.__('incorrect password'));
   }
 
   @Route.Post({
@@ -76,7 +73,7 @@ class RouteUser extends Route {
       },
     });
     if (user !== null) {
-      return this.send(ctx, Route.StatusCode.badRequest, { error: `User with email ${email} already exists.` });
+      return this.throwNotFound(ctx.i18n.__('user already exists'));
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await prisma.user.create({

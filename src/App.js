@@ -1,6 +1,9 @@
 import Config from 'config';
 import { join } from 'path';
 import { App as AppBase, middlewares } from 'koa-smart';
+import middleware from './middlewares/middleware';
+
+console.log(Config);
 
 const {
   i18n,
@@ -26,7 +29,7 @@ RateLimit.defaultOptions({
 export default class App extends AppBase {
   constructor() {
     super({
-      port: Config.apiConfig.API_PORT,
+      port: Config.apiConfig.apiPort,
       // routeParam is an object and it will be give as parametter to all routes
       // so for example you can give models to all your route so you can access on route
       routeParam: {},
@@ -55,6 +58,7 @@ export default class App extends AppBase {
         modes: ['query', 'subdomain', 'cookie', 'header', 'tld'],
         extension: '.json',
       }), // allows us to easily localize the API
+      middleware,
       handleError(), // helps handling error codes
       logger(), // gives detailed logs of each request made on the API
       addDefaultBody(), // if no body is present, put an empty object "{}" in its place.

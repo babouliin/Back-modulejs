@@ -1,8 +1,7 @@
 {
-	"User doesn't exist": "User doesn't exist",
-	"Forbidden access": "Forbidden access",
-	"Not found": "Not found",
-	"param required:": "param required:",
-	"hello": "hello",
-	"Please contact the support": "Please contact the support"
+	"user already exists": "User already exists",
+	"user not found": "User not found",
+	"incorrect password": "Incorrect password",
+	"Please contact the support": "Please contact the support",
+	"Forbidden": "Forbidden"
 }

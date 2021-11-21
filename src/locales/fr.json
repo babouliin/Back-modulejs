@@ -1,5 +1,7 @@
 {
-  "User doesn't exist": "L'utilisateurUser doesn't exist",
-  "Forbidden access": "Accès interdit",
-  "Not found": "Introuvable"
+	"user already exists": "L'utilisateur existe déjà",
+	"user not found": "L'utilisateur n'existe pas",
+	"incorrect password": "Mot de passe incorrect",
+	"Please contact the support": "Merci de contacter le support",
+	"Forbidden": "Accès interdit"
 }
