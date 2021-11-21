@@ -1,1 +1,1 @@
-back: build-prod && npm run prod
+back: npm run build-prod && npm run prod
