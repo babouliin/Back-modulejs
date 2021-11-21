@@ -5,8 +5,7 @@
     "author": "epitech",
     "license": "ISC",
     "engines": {
-        "node": "16.13.0",
-        "npm": "8.1.2"
+        "node": "16.13.0"
     },
     "scripts": {
         "dev": "cross-env NODE_ENV=development nodemon --exec babel-node src/index.js",

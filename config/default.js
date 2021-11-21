@@ -1,13 +1,16 @@
-import { resolve } from 'path';
-import { config } from 'dotenv';
-
-config({ path: resolve(__dirname, '../.env') });
+const { join } = require('path');
+require('dotenv').config({ path: join(__dirname, `/../.env.${process.env.NODE_ENV}`) });
 
 module.exports = {
   apiConfig: {
-    API_PORT: process.env.API_PORT,
+    apiPort: process.env.API_PORT,
   },
   secretConfig: {
-    PASSWORD_SECRET_KEY: process.env.PASSWORD_SECRET_KEY,
-  }
+    passwordSecret: process.env.PASSWORD_SECRET,
+    jwtSecret: process.env.JWT_SECRET,
+    loginTokenVersion: 1,
+  },
+  dbConfig: {
+    databaseUrl: process.env.DATABASE_URL,
+  },
 };
