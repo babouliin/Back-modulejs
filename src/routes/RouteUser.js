@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import Route from './Route';
 import prisma from '../config/prisma.config';
 import accesses from '../middlewares/accesses';
-import crypto from '../utils';
 
 class RouteUser extends Route {
   constructor(params) {

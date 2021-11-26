@@ -8,10 +8,7 @@ function getDataJwtToken(bearerToken) {
 }
 
 function generateJwtToken(userToRegister) {
-  return jwt.sign(
-    userToRegister,
-    Config.secretConfig.jwtSecret,
-  );
+  return jwt.sign(userToRegister, Config.secretConfig.jwtSecret);
 }
 
 export default {
