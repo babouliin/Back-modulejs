@@ -26,6 +26,7 @@ class RouteUser extends Route {
       },
     });
     if (userInDB === null) {
+      // eslint-disable-next-line no-underscore-dangle
       return this.throwNotFound(ctx.i18n.__('user not found'));
     }
     return this.sendOk(ctx, userInDB);
@@ -46,6 +47,7 @@ class RouteUser extends Route {
       },
     });
     if (userInDB === null) {
+      // eslint-disable-next-line no-underscore-dangle
       return this.throwNotFound(ctx.i18n.__('user not found'));
     }
     const resCompare = await bcrypt.compare(password, userInDB.password);
@@ -53,7 +55,8 @@ class RouteUser extends Route {
       await ctx.loginUser({ email: userInDB.email });
       return this.sendOk(ctx);
     }
-    return this.throwNotFound(ctx.i18n.__('incorrect password'));
+    // eslint-disable-next-line no-underscore-dangle
+    return this.throwUnauthorized(ctx.i18n.__('incorrect password'));
   }
 
   @Route.Post({
@@ -72,7 +75,8 @@ class RouteUser extends Route {
       },
     });
     if (user !== null) {
-      return this.throwNotFound(ctx.i18n.__('user already exists'));
+      // eslint-disable-next-line no-underscore-dangle
+      return this.throwUnauthorized(ctx.i18n.__('user already exists'));
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await prisma.user.create({

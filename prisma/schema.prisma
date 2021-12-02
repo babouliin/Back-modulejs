@@ -1,10 +1,10 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model User {
@@ -12,15 +12,15 @@ model User {
   email             String    @unique
   pseudo            String    @unique
   password          String
-  chats             Chat[]    @relation
+  chats             Chat[]
   messages_sent     Message[] @relation("message_sent")
   messages_received Message[] @relation("message_received")
 }
 
 model Chat {
   id       Int       @id @default(autoincrement())
-  user     User      @relation(fields: [user_id], references: [id])
   user_id  String
+  user     User      @relation(fields: [user_id], references: [id])
   messages Message[]
 }
 
@@ -28,10 +28,10 @@ model Message {
   id           Int      @id @default(autoincrement())
   text         String
   timestamp    DateTime
-  chat         Chat     @relation(fields: [chat_id], references: [id])
   chat_id      Int
-  from_user    User     @relation("message_sent", fields: [from_user_id], references: [id])
+  chat         Chat     @relation(fields: [chat_id], references: [id])
   from_user_id String
-  to_user      User     @relation("message_received", fields: [to_user_id], references: [id])
+  from_user    User     @relation("message_sent", fields: [from_user_id], references: [id])
   to_user_id   String
+  to_user      User     @relation("message_received", fields: [to_user_id], references: [id])
 }

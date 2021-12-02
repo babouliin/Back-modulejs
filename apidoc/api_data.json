@@ -10,7 +10,7 @@
       }
     ],
     "version": "0.0.0",
-    "filename": "/home/babouliin/tek5/js-project/back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/Index.js",
+    "filename": "/home/babouliin/tek5/js-project/Back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/Index.js",
     "groupTitle": "Index",
     "name": "Get"
   },
@@ -52,7 +52,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "/home/babouliin/tek5/js-project/back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/-user.js",
+    "filename": "/home/babouliin/tek5/js-project/Back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/-user.js",
     "groupTitle": "User",
     "name": "PostUser"
   },
@@ -87,7 +87,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "/home/babouliin/tek5/js-project/back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/-user-login.js",
+    "filename": "/home/babouliin/tek5/js-project/Back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/-user-login.js",
     "groupTitle": "User",
     "name": "PostUserLogin"
   }

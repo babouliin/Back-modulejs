@@ -8,8 +8,7 @@
         "node": "16.13.0"
     },
     "scripts": {
-        "dev": "NODE_ENV=development nodemon --exec babel-node src/index.js",
-        "start": "npm run dev",
+        "start": "NODE_ENV=development nodemon --exec babel-node src/index.js",
         "prod": "NODE_ENV=production node dist/index.js",
         "_rm-build-prod": "rimraf dist",
         "_build-prod": "NODE_ENV=production babel config src --out-dir dist --copy-files",
