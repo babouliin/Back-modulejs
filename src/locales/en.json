@@ -3,5 +3,6 @@
 	"user not found": "User not found",
 	"incorrect password": "Incorrect password",
 	"Please contact the support": "Please contact the support",
-	"Forbidden": "Forbidden"
+	"Forbidden": "Forbidden",
+	"Unauthorized": "Unauthorized"
 }

@@ -10,7 +10,6 @@ async function addUserToCtx(ctx) {
         ctx.state.user = user;
       }
     } catch (error) {
-      console.log(error);
       return error;
     }
   }

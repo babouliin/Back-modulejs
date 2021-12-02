@@ -1,14 +1,28 @@
 import { Route as RouteBase } from 'koa-smart';
 
 export default class Route extends RouteBase {
-  // constructor(params) {
-  //   super(params);
-  // }
-
-  // async beforeRoute(ctx, infos, next) {
-  //   // the "beforeRoute" function is executed before any call to a route
-  // belonging to the same class
-  //   // (or a class ihneriting from it) is made.
-  //   await super.beforeRoute(ctx, infos, next);
-  // }
+  // eslint-disable-next-line no-underscore-dangle
+  async _mlTestAccess(ctx, { accesses = [] }) {
+    if (Array.isArray(accesses) && accesses.length) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const access of accesses) {
+        // eslint-disable-next-line no-await-in-loop
+        if (await access(ctx)) {
+          return true;
+        }
+      }
+      this.throwUnauthorized(null, true);
+    }
+    if (Array.isArray(this.accesses) && this.accesses.length) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const access of this.accesses) {
+        // eslint-disable-next-line no-await-in-loop
+        if (await access(ctx)) {
+          return true;
+        }
+      }
+      this.throwUnauthorized(null, true);
+    }
+    return true;
+  }
 }
