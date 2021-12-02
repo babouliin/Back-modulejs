@@ -69,12 +69,15 @@ class RouteUser extends Route {
   })
   async createUser(ctx) {
     const { email, pseudo, password } = this.body(ctx);
-    const user = await prisma.user.findUnique({
+    const users = await prisma.user.findMany({
       where: {
-        email,
+        OR: [
+          { email },
+          { pseudo },
+        ],
       },
     });
-    if (user !== null) {
+    if (users.length !== 0) {
       // eslint-disable-next-line no-underscore-dangle
       return this.throwUnauthorized(ctx.i18n.__('user already exists'));
     }
@@ -86,6 +89,7 @@ class RouteUser extends Route {
         password: hashedPassword,
       },
     });
+    await ctx.loginUser({ email: newUser.email });
     return this.sendCreated(ctx, newUser);
   }
 }
