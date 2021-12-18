@@ -1,6 +1,7 @@
 import Config from 'config';
 import { join } from 'path';
 import { App as AppBase, middlewares } from 'koa-smart';
+import { Server } from 'socket.io';
 import middleware from './middlewares/middlewares';
 
 console.log(Config);

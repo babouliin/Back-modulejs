@@ -8,20 +8,24 @@ datasource db {
 }
 
 model User {
-  id                String    @id @default(uuid())
-  email             String    @unique
-  pseudo            String    @unique
-  password          String
-  chats             Chat[]
-  messages_sent     Message[] @relation("message_sent")
-  messages_received Message[] @relation("message_received")
+  id                 String    @id @default(uuid())
+  email              String    @unique
+  pseudo             String    @unique
+  password           String
+  chats_as_initiator Chat[]    @relation("chat_initiator_user")
+  chats_as_target    Chat[]    @relation("chat_target_user")
+  messages_sent      Message[] @relation("message_sent")
+  messages_received  Message[] @relation("message_received")
 }
 
 model Chat {
-  id       Int       @id @default(autoincrement())
-  user_id  String
-  user     User      @relation(fields: [user_id], references: [id])
-  messages Message[]
+  id                Int       @id @default(autoincrement())
+  chat_initiator_id String
+  chat_initiator    User      @relation("chat_initiator_user", fields: [chat_initiator_id], references: [id])
+  chat_target_id    String
+  chat_target       User      @relation("chat_target_user", fields: [chat_target_id], references: [id])
+  updatedAt         DateTime
+  messages          Message[]
 }
 
 model Message {

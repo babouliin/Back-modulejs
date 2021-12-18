@@ -3,5 +3,6 @@
 	"user not found": "L'utilisateur n'existe pas",
 	"incorrect password": "Mot de passe incorrect",
 	"Please contact the support": "Merci de contacter le support",
-	"Forbidden": "Accès interdit"
+	"Forbidden": "Accès interdit",
+	"Unauthorized": "Unauthorized"
 }

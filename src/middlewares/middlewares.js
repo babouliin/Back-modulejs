@@ -1,11 +1,11 @@
 import Config from 'config';
-import crypto from '../utils';
+import utils from '../utils';
 
 async function addUserToCtx(ctx) {
   const bearerToken = ctx.get('Authorization');
   if (bearerToken) {
     try {
-      const user = crypto.getDataJwtToken(bearerToken);
+      const user = utils.getDataJwtToken(bearerToken);
       if (user.loginTokenVersion === Config.secretConfig.loginTokenVersion) {
         ctx.state.user = user;
       }
@@ -19,11 +19,12 @@ async function addUserToCtx(ctx) {
 function loginUser(ctx) {
   return async (user) => {
     const userToRegister = {
+      id: user.id,
       email: user.email,
       loginTokenVersion: Config.secretConfig.loginTokenVersion,
       date: new Date(),
     };
-    const token = crypto.generateJwtToken(userToRegister);
+    const token = utils.generateJwtToken(userToRegister);
     ctx.state.user = userToRegister;
     ctx.body = { ...ctx.body };
     ctx.body.token = token;
