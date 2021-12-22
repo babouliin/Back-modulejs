@@ -13,7 +13,8 @@
         "prod": "cross-env NODE_ENV=production node dist/index.js",
         "_rm-build-prod": "rimraf dist",
         "_build-prod": "cross-env NODE_ENV=production babel config src --out-dir dist --copy-files",
-        "build-prod": "npm run _rm-build-prod && npm run _build-prod",
+        "prepare_prisma": "npx prisma generate",
+        "build-prod": "npm run _rm-build-prod && npm run prepare_prisma && npm run _build-prod",
         "lint": "eslint src"
     },
     "dependencies": {
