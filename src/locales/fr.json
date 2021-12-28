@@ -4,5 +4,6 @@
 	"incorrect password": "Mot de passe incorrect",
 	"Please contact the support": "Merci de contacter le support",
 	"Forbidden": "Accès interdit",
-	"Unauthorized": "Unauthorized"
+	"Unauthorized": "Pas autorisé",
+	"Not found": "Pas trouvé"
 }

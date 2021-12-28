@@ -31,7 +31,6 @@ class RouteAuth extends Route {
       await ctx.loginUser({
         id: userInDB.id,
         email: userInDB.email,
-        pseudo: userInDB.pseudo,
       });
       return this.sendOk(ctx);
     }
@@ -74,7 +73,10 @@ class RouteAuth extends Route {
         pseudo: true,
       },
     });
-    await ctx.loginUser({ email: newUser.email });
+    await ctx.loginUser({
+      id: newUser.id,
+      email: newUser.email,
+    });
     return this.sendCreated(ctx, newUser);
   }
 }

@@ -38,6 +38,7 @@ class RouteUser extends Route {
   @Route.Get({
     path: '/users',
     accesses: [accesses.isConnected],
+    disable: true,
   })
   async getAllUser(ctx) {
     const usersInDB = await prisma.user.findMany({
@@ -46,6 +47,11 @@ class RouteUser extends Route {
         email: true,
         pseudo: true,
       },
+      orderBy: [
+        {
+          pseudo: 'asc',
+        },
+      ],
     });
     return this.sendOk(ctx, usersInDB);
   }

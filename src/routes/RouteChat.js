@@ -13,6 +13,7 @@ class RouteChat extends Route {
   @Route.Get({
     path: '/chats',
     accesses: [accesses.isConnected],
+    disable: true,
   })
   async getAllChats(ctx) {
     const { user } = ctx.state;
@@ -27,8 +28,41 @@ class RouteChat extends Route {
           },
         ],
       },
+      select: {
+        id: true,
+        chat_initiator: {
+          id: true,
+          pseudo: true,
+        },
+        chat_target: {
+          id: true,
+          pseudo: true,
+        },
+        updatedAt: true,
+      },
+      orderBy: [
+        {
+          updatedAt: 'desc',
+        },
+      ],
     });
-    return this.sendOk(ctx, chatsOfUser);
+    const chats = [];
+    chatsOfUser.forEach((chat) => {
+      if (chat.chat_initiator.id === user.id) {
+        chats.push({
+          id: chat.id,
+          other_user: chat.chat_target,
+          updatedAt: chat.updatedAt,
+        });
+      } else {
+        chats.push({
+          id: chat.id,
+          other_user: chat.chat_initiator,
+          updatedAt: chat.updatedAt,
+        });
+      }
+    });
+    return this.sendOk(ctx, chats);
   }
 }
 

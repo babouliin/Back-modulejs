@@ -78,21 +78,6 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/chats",
-    "title": "",
-    "group": "Chat",
-    "permission": [
-      {
-        "name": "isConnected"
-      }
-    ],
-    "version": "0.0.0",
-    "filename": "/home/babouliin/tek5/js-project/Back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/-chats.js",
-    "groupTitle": "Chat",
-    "name": "GetChats"
-  },
-  {
-    "type": "get",
     "url": "/",
     "title": "",
     "group": "Index",
@@ -133,21 +118,6 @@ define({ "api": [
     "filename": "/home/babouliin/tek5/js-project/Back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/-messages.js",
     "groupTitle": "Message",
     "name": "GetMessages"
-  },
-  {
-    "type": "get",
-    "url": "/users",
-    "title": "",
-    "group": "User",
-    "permission": [
-      {
-        "name": "isConnected"
-      }
-    ],
-    "version": "0.0.0",
-    "filename": "/home/babouliin/tek5/js-project/Back-modulejs/node_modules/koa-smart/dist/ApiDocTmp/-users.js",
-    "groupTitle": "User",
-    "name": "GetUsers"
   },
   {
     "type": "put",

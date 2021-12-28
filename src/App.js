@@ -1,10 +1,8 @@
 import Config from 'config';
 import { join } from 'path';
 import { App as AppBase, middlewares } from 'koa-smart';
-import { Server } from 'socket.io';
 import middleware from './middlewares/middlewares';
-
-console.log(Config);
+import initSocket from './socket/socket';
 
 const {
   i18n,
@@ -73,6 +71,9 @@ export default class App extends AppBase {
     ]);
 
     super.mountFolder(join(__dirname, 'routes'), '/'); // adds a folder to scan for route files
+
+    initSocket(this.koaApp);
+
     return super.start();
   }
 }

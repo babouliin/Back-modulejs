@@ -24,6 +24,11 @@ class RouteMessage extends Route {
       where: {
         chat_id: chatId,
       },
+      orderBy: [
+        {
+          createdAt: 'desc',
+        },
+      ],
     });
     return this.sendOk(ctx, messagesOfChat);
   }
