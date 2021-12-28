@@ -3,7 +3,7 @@ require('dotenv').config({ path: join(__dirname, `/../.env.${process.env.NODE_EN
 
 module.exports = {
   apiConfig: {
-    apiPort: process.env.PORT || process.env.API_PORT,
+    apiPort: process.env.PORT,
   },
   secretConfig: {
     passwordSecret: process.env.PASSWORD_SECRET,
