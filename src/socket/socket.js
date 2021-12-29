@@ -181,15 +181,16 @@ function initSocket(koaApp) {
     });
 
     socket.on('disconnect', async () => {
+      console.log('disconnect');
       const matchingSockets = await io.in(socket.session.id).allSockets();
       const isDisconnected = matchingSockets.size === 0;
       if (isDisconnected) {
-        socket.disconnect();
         await prisma.session.delete({
           where: {
-            id: socket.session.id,
+            user_id: socket.session.userId,
           },
         });
+        socket.disconnect();
       }
     });
   });
