@@ -9,16 +9,14 @@ datasource db {
 
 model User {
   id                 String    @id @default(uuid())
-  email              String
-  pseudo             String
+  email              String    @unique
+  pseudo             String    @unique
   password           String
   chats_as_initiator Chat[]    @relation("chat_initiator_user")
   chats_as_target    Chat[]    @relation("chat_target_user")
   messages_sent      Message[] @relation("message_sent")
   messages_received  Message[] @relation("message_received")
   sessions           Session[] @relation("user_sessions")
-
-  @@unique([email, pseudo])
 }
 
 model Chat {
@@ -44,7 +42,7 @@ model Message {
 }
 
 model Session {
-  id        String  @id @default(uuid())
-  user_id   String  @unique
-  user      User    @relation("user_sessions", fields: [user_id], references: [id], onDelete: Cascade)
+  id      String @id @default(uuid())
+  user_id String @unique
+  user    User   @relation("user_sessions", fields: [user_id], references: [id], onDelete: Cascade)
 }
