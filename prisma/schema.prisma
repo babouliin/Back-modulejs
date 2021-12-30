@@ -43,6 +43,6 @@ model Message {
 
 model Session {
   id      String @id @default(uuid())
-  user_id String @unique
+  user_id String
   user    User   @relation("user_sessions", fields: [user_id], references: [id], onDelete: Cascade)
 }
