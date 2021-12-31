@@ -20,7 +20,7 @@ model User {
 }
 
 model Chat {
-  id                Int       @id @default(autoincrement())
+  id                String    @id @default(uuid())
   chat_initiator_id String
   chat_initiator    User      @relation("chat_initiator_user", fields: [chat_initiator_id], references: [id], onDelete: Cascade)
   chat_target_id    String
@@ -30,10 +30,10 @@ model Chat {
 }
 
 model Message {
-  id           Int      @id @default(autoincrement())
+  id           String   @id @default(uuid())
   content      String
   createdAt    DateTime @default(now())
-  chat_id      Int
+  chat_id      String
   chat         Chat     @relation(fields: [chat_id], references: [id], onDelete: Cascade)
   from_user_id String
   from_user    User     @relation("message_sent", fields: [from_user_id], references: [id], onDelete: Cascade)

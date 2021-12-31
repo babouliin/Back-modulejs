@@ -14,12 +14,13 @@ class RouteMessage extends Route {
   @Route.Get({
     path: '/messages',
     accesses: [accesses.isConnected],
-    bodyType: Types.object().keys({
+    queryType: Types.object().keys({
       chatId: Types.string().required(),
     }),
   })
   async getMessagesOfChat(ctx) {
-    const { chatId } = this.body(ctx);
+    const queryParams = this.queryParam(ctx);
+    const { chatId } = queryParams;
     const messagesOfChat = await prisma.message.findMany({
       where: {
         chat_id: chatId,
