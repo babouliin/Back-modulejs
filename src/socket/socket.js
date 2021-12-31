@@ -1,24 +1,14 @@
-import { createServer } from 'http';
 import { Server } from 'socket.io';
 import Config from 'config';
 import prisma from '../config/prisma.config';
 import utils from '../utils';
 
 function initSocket(koaApp) {
-  const httpServer = createServer();
-  const io = new Server(httpServer, {
+  const io = new Server(koaApp, {
     cors: {
       origin: 'http://localhost:3000',
     },
   });
-  httpServer.listen(8081);
-
-  // console.log(koaApp)
-  // const io = new Server(koaApp, {
-  //   cors: {
-  //     origin: 'http://localhost:3000',
-  //   },
-  // });
 
   io.use(async (socket, next) => {
     const { token, sessionId } = socket.handshake.auth;
@@ -185,7 +175,7 @@ function initSocket(koaApp) {
       const matchingSockets = await io.in(socket.session.id).allSockets();
       const isDisconnected = matchingSockets.size === 0;
       if (isDisconnected) {
-        await prisma.session.delete({
+        await prisma.session.deleteMany({
           where: {
             user_id: socket.session.userId,
           },
