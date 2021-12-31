@@ -157,7 +157,7 @@ function initSocket(koaApp) {
       if (chatId) {
         chat = await prisma.chat.findUnique({
           where: {
-            chat_id: chatId,
+            id: chatId,
           },
         });
       } else {
