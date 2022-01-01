@@ -25,9 +25,23 @@ class RouteMessage extends Route {
       where: {
         chat_id: chatId,
       },
+      include: {
+        from_user: {
+          select: {
+            id: true,
+            pseudo: true,
+          },
+        },
+        to_user: {
+          select: {
+            id: true,
+            pseudo: true,
+          },
+        },
+      },
       orderBy: [
         {
-          createdAt: 'desc',
+          createdAt: 'asc',
         },
       ],
     });

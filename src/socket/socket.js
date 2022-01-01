@@ -23,8 +23,8 @@ function initSocket(koaApp) {
           if (sessionId) {
             console.log("have session id")
             const session = await prisma.session.findUnique({
-              data: {
-                session_id: sessionId,
+              where: {
+                id: sessionId,
               },
             });
             if (session) {
@@ -60,6 +60,7 @@ function initSocket(koaApp) {
   });
 
   io.on('connection', async (socket) => {
+    console.log(socket.id);
     const session = await prisma.session.create({
       data: {
         user_id: socket.session.userId,
@@ -156,8 +157,35 @@ function initSocket(koaApp) {
             chat_initiator_id: socket.session.userId,
             chat_target_id: toUserId,
           },
+          select: {
+            id: true,
+            chat_initiator: {
+              select: {
+                id: true,
+                pseudo: true,
+              },
+            },
+            chat_target: {
+              select: {
+                id: true,
+                pseudo: true,
+              },
+            },
+            updatedAt: true,
+          },
         });
-        socket.to(toUserId).to(socket.session.id).emit('new chat', chat);
+        const chatEmitter = {
+          id: chat.id,
+          other_user: chat.chat_target,
+          updatedAt: chat.updatedAt,
+        };
+        const chatReceiver = {
+          id: chat.id,
+          other_user: chat.chat_initiator,
+          updatedAt: chat.updatedAt,
+        };
+        socket.emit('new chat', chatEmitter);
+        socket.to(toUserId).emit('new chat', chatReceiver);
       }
       const message = await prisma.message.create({
         data: {
@@ -166,8 +194,22 @@ function initSocket(koaApp) {
           from_user_id: socket.session.userId,
           to_user_id: toUserId,
         },
+        include: {
+          from_user: {
+            select: {
+              id: true,
+              pseudo: true,
+            },
+          },
+          to_user: {
+            select: {
+              id: true,
+              pseudo: true,
+            },
+          },
+        },
       });
-      socket.to(toUserId).to(socket.session.id).emit('private message', message);
+      socket.to(toUserId).emit('private message', message);
     });
 
     socket.on('disconnect', async () => {
