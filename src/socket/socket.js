@@ -178,11 +178,13 @@ function initSocket(koaApp) {
           id: chat.id,
           other_user: chat.chat_target,
           updatedAt: chat.updatedAt,
+          isEmitter: true,
         };
         const chatReceiver = {
           id: chat.id,
           other_user: chat.chat_initiator,
           updatedAt: chat.updatedAt,
+          isEmitter: false,
         };
         socket.emit('new chat', chatEmitter);
         socket.to(toUserId).emit('new chat', chatReceiver);
