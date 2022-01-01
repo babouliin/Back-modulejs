@@ -5,7 +5,9 @@ import utils from '../utils';
 
 function initSocket(koaApp) {
   const io = new Server(koaApp, {
-    origins: ['https://front-modulejs.herokuapp.com', 'http://localhost:3000'],
+    cors: {
+      origin: 'https://front-modulejs.herokuapp.com',
+    },
   });
 
   io.use(async (socket, next) => {
