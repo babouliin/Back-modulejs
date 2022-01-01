@@ -2,6 +2,12 @@
 
 Backend part of moduleJS.
 
+## Access the online project
+
+Open [https://back-modulejs.herokuapp.com/](https://back-modulejs.herokuapp.com/) to use the online version of our project.
+
+Note: this is the API part..
+
 ## Test the project
 
 First, you will need the .env file be able to use the project.\
