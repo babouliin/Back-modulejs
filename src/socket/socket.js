@@ -13,54 +13,40 @@ function initSocket(koaApp) {
   io.use(async (socket, next) => {
     const { token, sessionId } = socket.handshake.auth;
     if (token) {
-      console.log("have token")
       try {
-        console.log("try")
         const user = utils.getDataJwtToken(token);
-        console.log("decoded token")
         if (user.loginTokenVersion === Config.secretConfig.loginTokenVersion) {
-          console.log("good token")
           if (sessionId) {
-            console.log("have session id")
             const session = await prisma.session.findUnique({
               where: {
                 id: sessionId,
               },
             });
             if (session) {
-              console.log("session in db")
               if (session.user_id === user.id) {
-                console.log("match session id")
                 // eslint-disable-next-line no-param-reassign
                 socket.session = session;
                 return next();
               }
-              console.log("no match session id")
               return next(new Error('this sessionId doesn\'t match the one in database'));
             }
-            console.log("no session in db")
             return next(new Error('no session found for this Id in database'));
           }
-          console.log("no session id")
           // eslint-disable-next-line no-param-reassign
           socket.session = {
             userId: user.id,
           };
           return next();
         }
-        console.log("bad token")
         return next(new Error('no user for this token'));
       } catch (error) {
-        console.log("error decoding token", error)
         return next(error);
       }
     }
-    console.log("no token")
     return next(new Error('no JWT provided'));
   });
 
   io.on('connection', async (socket) => {
-    console.log(socket.id);
     const session = await prisma.session.create({
       data: {
         user_id: socket.session.userId,
@@ -213,7 +199,6 @@ function initSocket(koaApp) {
     });
 
     socket.on('disconnect', async () => {
-      console.log('disconnect');
       const matchingSockets = await io.in(socket.session.id).allSockets();
       const isDisconnected = matchingSockets.size === 0;
       if (isDisconnected) {
